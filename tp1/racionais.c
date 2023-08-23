@@ -61,6 +61,102 @@ struct racional simplifica_r(struct racional r) {
     }
 
     return r;
+
+}
+
+struct racional sorteia_r(int n) {
+    if (n <= 0) {
+        struct racional r_invalido = {0, 0, 0}; 
+        return r_invalido;
+    }
+
+    int numerador = aleat(-100, 100);
+    int denominador = aleat(-100, 100);
+    return cria_r(numerador, denominador);
+}
+
+void imprime_r(struct racional r) {
+    if (valido_r(r) == 0) {
+        printf("INVALIDO \n");
+        return;
+    }
+
+
+    if (r.num == 0) {
+        printf("0");
+    } else if (r.den == 1) {
+        printf("%d\n", r.num);
+    } else if (r.num == r.den) {
+        printf("1\n");
+    } else if (r.num == -r.den) {
+        printf("-1\n");
+    } else if (r.num < 0 && r.den < 0) {
+        printf("%d/%d\n", -r.num, -r.den);
+    } else if (r.num < 0) {
+        printf("-%d/%d\n", -r.num, r.den);
+    } else {
+        printf("%d/%d\n", r.num, r.den);
+    }
+}
+int valido_r(struct racional r) {
+    return r.valido == 1;
+}
+
+struct racional soma_r(struct racional r1, struct racional r2) {
+    struct racional result;
+
+    int mmc_den = mmc(r1.den, r2.den);
+
+    int numerador1 = r1.num * (mmc_den / r1.den);
+    int numerador2 = r2.num * (mmc_den / r2.den);
+
+    result.num = numerador1 + numerador2;
+    result.den = mmc_den;
+    result.valido = 1;
+
+    return simplifica_r(result);
+}
+
+struct racional subtrai_r(struct racional r1, struct racional r2) {
+    struct racional resultado;
+
+    int mmc_den = mmc(r1.den, r2.den);
+
+    int num1 = r1.num * (mmc_den / r1.den);
+    int num2 = r2.num * (mmc_den / r2.den);
+
+    resultado.num = num1 - num2;
+    resultado.den = mmc_den;
+    resultado.valido = 1;
+
+    return simplifica_r(resultado);
+}
+
+struct racional multiplica_r(struct racional r1, struct racional r2) {
+    struct racional resultado;
+
+    resultado.num = r1.num * r2.num;
+    resultado.den = r1.den * r2.den;
+    resultado.valido = 1;
+
+    return simplifica_r(resultado);
+}
+
+struct racional divide_r(struct racional r1, struct racional r2) {
+    struct racional resultado;
+
+    resultado.num = r1.num * r2.den;
+    resultado.den = r1.den * r2.num;
+
+    if (resultado.den == 0) {
+        resultado.valido = 0;
+        resultado.num = 0;
+        resultado.den = 0;
+    } else {
+        resultado.valido = 1;
+    }
+
+    return simplifica_r(resultado);
 }
 
 
