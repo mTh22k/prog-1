@@ -9,12 +9,22 @@
 
 int main (){
 
-    struct racional r;
+     srand(time(NULL)); 
 
-    r.num = aleat(1, 100);
-    r.den = aleat(1, 100);
+     int numerador = aleat(1, 100); 
+     int denominador = aleat(1, 100);
+
+     struct racional r = cria_r(numerador, denominador);
+
     
-    printf("%d",r.den);
+    printf("Racional original: %d/%d\n", r.num, r.den);
+
+    struct racional r_simplificado = simplifica_r(r);
+
+    printf("Racional simplificado: %d/%d\n", r_simplificado.num, r_simplificado.den);
+
+
+    
 
     return 0;
 }
