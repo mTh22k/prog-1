@@ -10,37 +10,52 @@
 int main() {
     srand(time(NULL)); 
 
-    struct racional r1 = sorteia_r(100);
-    struct racional r2 = sorteia_r(100);
+    int n;
+    scanf("%d", &n);
+    int max;
+    scanf("%d", &max);
 
-    printf("Numeros Racionais:\n");
-    imprime_r(r1);
-    imprime_r(r2);
 
-    // Simplifique os racionais
-    struct racional novo_r1 = simplifica_r(r1);
-    struct racional novo_r2 = simplifica_r(r2);
+    for (int  i = 1; i <= n; i++)
+    {
 
-    printf("Numeros Racionais Simplificados:\n");
-    imprime_r(novo_r1);
-    imprime_r(novo_r2);
+        struct racional r1 = sorteia_r(max);
+        struct racional r2 = sorteia_r(max);
 
-    struct racional soma = soma_r(novo_r1, novo_r2);
-    struct racional subtracao = subtrai_r(novo_r1, novo_r2);
-    struct racional multiplicacao = multiplica_r(novo_r1, novo_r2);
-    struct racional divisao = divide_r(novo_r1, novo_r2);
+        printf("%d: ",i);
 
-    printf("\nSoma:\n");
-    imprime_r(soma);
+        imprime_r(r1);
+        imprime_r(r2);
 
-    printf("\nSubtracao:\n");
-    imprime_r(subtracao);
+         if (!valido_r(r1) || !valido_r(r2)) 
+                printf("NUMERO INVALIDO ");
 
-    printf("\nMultiplicacao:\n");
-    imprime_r(multiplicacao);
+        struct racional novo_r1 = simplifica_r(r1);
+        struct racional novo_r2 = simplifica_r(r2);
 
-    printf("\nDivisao:\n");
-    imprime_r(divisao);
+        imprime_r(novo_r1);
+        imprime_r(novo_r2);
+
+        struct racional soma = soma_r(novo_r1, novo_r2);
+        struct racional subtracao = subtrai_r(novo_r1, novo_r2);
+        struct racional multiplicacao = multiplica_r(novo_r1, novo_r2);
+        struct racional divisao = divide_r(novo_r1, novo_r2);
+
+        imprime_r(soma);
+        imprime_r(subtracao);
+        imprime_r(multiplicacao);
+
+        if (!valido_r(divisao)) { 
+        printf("DIVISAO INVALIDA ");
+        } else {
+            imprime_r(divisao);
+        }
+
+        printf("\n");
+
+    }
+    
+
 
     return 0;
 }

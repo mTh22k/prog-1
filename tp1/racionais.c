@@ -65,37 +65,32 @@ struct racional simplifica_r(struct racional r) {
 }
 
 struct racional sorteia_r(int n) {
-    if (n <= 0) {
-        struct racional r_invalido = {0, 0, 0}; 
-        return r_invalido;
-    }
 
-    int numerador = aleat(-100, 100);
-    int denominador = aleat(-100, 100);
+    int numerador = aleat(0,n);
+    int denominador = aleat(0,n);
     return cria_r(numerador, denominador);
 }
 
 void imprime_r(struct racional r) {
     if (valido_r(r) == 0) {
-        printf("INVALIDO \n");
+        printf("INVALIDO ");
         return;
     }
 
-
-    if (r.num == 0) {
+      if (r.num == 0) {
         printf("0");
     } else if (r.den == 1) {
-        printf("%d\n", r.num);
+        printf("%d ", r.num);
     } else if (r.num == r.den) {
-        printf("1\n");
+        printf("1 ");
     } else if (r.num == -r.den) {
-        printf("-1\n");
+        printf("-1 ");
     } else if (r.num < 0 && r.den < 0) {
-        printf("%d/%d\n", -r.num, -r.den);
+        printf("%d/%d ", -r.num, -r.den);
     } else if (r.num < 0) {
-        printf("-%d/%d\n", -r.num, r.den);
+        printf("-%d/%d ", -r.num, r.den);
     } else {
-        printf("%d/%d\n", r.num, r.den);
+        printf("%d/%d ", r.num, r.den);
     }
 }
 int valido_r(struct racional r) {
