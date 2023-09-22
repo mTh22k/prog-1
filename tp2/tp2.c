@@ -2,77 +2,113 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int main() {
+#define MAX 100
+
+void imprime_vet(int n, struct racional vet[])
+{
+
+    for (int i = 0; i <= n; i++)
+    {
+        imprime_r(vet[i]);
+    }
+    printf("\n");
+}
+
+void verifica_valido(int n, struct racional vet[])
+{
+    int j = 0;
+
+    for (int i = 0; i <= n; i++)
+    {
+        if (valido_r(vet[i]) != 0)
+        {
+            vet[j] = vet[i];
+            j++;
+        }
+    }
+
+    n = j - 1; // atualiza o tamanho do vetor a partir de n
+}
+
+void sorteia(int n, struct racional vet[], int max)
+{
+
+    for (int i = 0; i <= n; i++)
+    {
+        vet[i] = sorteia_r(max);
+    }
+}
+
+struct racional *soma_racional(int n, struct racional vet[], struct racional *somat)
+{
+
+    for (int i = 0; i <= n; i++)
+    {
+        struct racional resultado;
+
+        if (soma_r(*somat, vet[i], &resultado) && valido_r(resultado))
+            *somat = resultado;
+    }
+    return somat;
+}
+
+void ordena(int n, struct racional vet[])
+{
+
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < n; j++)
+        {
+            if (compara_r(vet[j], vet[j + 1]) == 1)
+            {
+                struct racional temp;
+
+                temp = vet[j];
+                vet[j] = vet[j + 1];
+                vet[j + 1] = temp;
+            }
+        }
+    }
+}
+
+int main()
+{
     int n = 0;
     int max = 0;
-    int i = 0;
-    int j = 0;
 
     srand(0);
 
-    do {
+    do
+    {
         printf("digite um valor para n entre 0 e 100 : ");
         scanf("%d", &n);
-    } while (n <= 0 || n > 100); 
+    } while (n <= 0 || n > 100);
 
-    do {
+    do
+    {
         printf("digite um valor para max ate 30 : ");
         scanf("%d", &max);
     } while (max <= 0 || max > 30);
 
     struct racional v[n];
 
-    for (i = 0; i <= n; i++) {
-        v[i] = sorteia_r(max);
-    } 
+    sorteia(n, v, max);
 
-    for (i = 0; i <= n; i++) {
-        imprime_r(v[i]);
-    }
-    printf("\n");
+    imprime_vet(n, v);
 
-    for (i = 0; i <= n; i++) {
-        if (valido_r(v[i]) != 0) {
-            v[j] = v[i];
-            j++;
-        }
-    } 
+    verifica_valido(n, v);
 
-    n = j - 1; // atualiza o tamanho do vetor a partir de n
+    imprime_vet(n, v);
 
-    for (i = 0; i <= n; i++) {
-        imprime_r(v[i]);
-    }
-    printf("\n");
+    ordena(n, v);
 
-    for (i = 0; i < n; i++) {
-        for (j = 0; j < n; j++)
-        {
-            if (compara_r(v[j], v[j + 1]) == 1) {
-                struct racional temp;
+    imprime_vet(n, v);
 
-                temp = v[j];
-                v[j] = v[j + 1];
-                v[j + 1] = temp;
-            } 
-        }
-    }
+    struct racional somat;
 
-    for (i = 0; i <= n; i++)
-    {
-        imprime_r(v[i]);
-    }
-    printf("\n");
+    somat = cria_r(0, 1);
 
-    struct racional somat = cria_r(0, 1);
-
-    for (i = 0; i <= n; i++)
-    {
-        struct racional resultado; 
-
-        if (soma_r(somat, v[i], &resultado) && valido_r(resultado)) 
-            somat = resultado;                                      
-    }                         
+    soma_racional(n, v, &somat);
 
     printf("a soma de todos os elementos e: ");
     imprime_r(somat);
